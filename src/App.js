@@ -99,7 +99,7 @@ class SignUp extends React.Component {
         window.swal({
           icon: 'error',
           title: 'Oops...',
-          text: 'Already registerd this  email! Pls Goto login!',
+          text: err.response.data,
         })
       });
     }
@@ -195,11 +195,11 @@ LoginSubmit = event => {
       Password : "",
     })
   }).catch(err => {
-    console.log(err);
+    console.log(err.response.data);
     window.swal({
       icon: 'error',
       title: 'Oops...',
-      text: 'Check your Email and Password is valid..!',
+      text: err.response.data,
     })
 
   })
