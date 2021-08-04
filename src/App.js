@@ -2,6 +2,7 @@ import React from "react";
 import "./index.css";
 import './App.css';
 import axios from "axios";
+import  "sweetalert"
 
 const api = axios.create({
   baseURL: `http://localhost:3001/info/`
@@ -83,21 +84,40 @@ class SignUp extends React.Component {
       Password : this.state.Password,
     }
     if(data.Password !== this.state.RePassword){
-      alert("Password Mismatching, Pls Enter Correct Password");
+      window.swal({
+        icon: 'error',
+        title: 'Oops...',
+        text: 'Password Mismatching, Pls Enter Correct Password!',
+      })
     }else
     {
       api.post("/",data).then(res => {
-        console.log(res);
+        console.log(res.data,"welldone");
+        window.swal("Welocome!", "SignUp Successfully!", "success");
       }).catch(err => {
-        alert("Already registerd this  email! Pls goto login")
         console.log(err)
+        window.swal({
+          icon: 'error',
+          title: 'Oops...',
+          text: 'Already registerd this  email! Pls Goto login!',
+        })
       });
     }
+
+    this.setState({
+      Name : "",
+      Email : "",
+      Password : "",
+      RePassword : "",
+
+    })
+
 }
+
 
 render() {
     return( 
-      <form  onSubmit = {this.InfoSubmit}>   
+      <form onSubmit = {this.InfoSubmit}>   
       <div className='signUpContainer' >
       
         <h4 className='headerText'>Join Us Today</h4>
@@ -168,12 +188,23 @@ LoginSubmit = event => {
   }
 
   api.post("/login", data).then(res => {
-    console.log(res.data,"Login Successfully");
-    alert("Login Successfully");
+    window.swal("Welocome!", "Login Successfully!", "success");
+
+    this.setState({
+      Email : "",
+      Password : "",
+    })
   }).catch(err => {
     console.log(err);
-    alert("Check your Email and Password is valid..!");
+    window.swal({
+      icon: 'error',
+      title: 'Oops...',
+      text: 'Check your Email and Password is valid..!',
+    })
+
   })
+
+
 }
 
   render() {
